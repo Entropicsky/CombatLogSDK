@@ -25,8 +25,8 @@ The SMITE 2 CombatLog Parser transforms raw log data into structured formats and
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/CombatLogParser2.git
-cd CombatLogParser2
+git clone https://github.com/Entropicsky/CombatLogSDK.git
+cd CombatLogSDK
 
 # Install dependencies
 pip install -r requirements.txt
@@ -89,7 +89,7 @@ player_stats = analyzer.get_player_performance("PlayerName")
 
 ### Visualization
 
-The SDK provides visualization tools to create charts from performance metrics:
+The SDK provides a rich set of visualization tools to create charts and visual insights from game data:
 
 ```python
 from src.parser import CombatLogParser
@@ -114,24 +114,109 @@ kda_chart.export("output/kda_chart.png")
 damage_distribution.export("output/damage_distribution.png")
 ```
 
+#### Available Visualization Types
+
+The SDK includes several visualization types for different analytical needs:
+
+1. **KDA Charts**: Bar charts showing kills, deaths, and assists metrics
+   ```python
+   kda_chart = visualizer.create_kda_chart()
+   ```
+
+2. **Damage Distribution**: Stacked bar charts showing damage breakdown by target type
+   ```python
+   damage_distribution = visualizer.create_damage_distribution(sort_by='total_damage')
+   ```
+
+3. **Player Damage Comparison**: Bar charts comparing player damage across team
+   ```python
+   damage_comparison = visualizer.create_player_damage_comparison()
+   ```
+
+4. **Performance Radar Charts**: Radar charts showing multiple performance metrics
+   ```python
+   radar_chart = visualizer.create_performance_radar(metrics=['kda_ratio', 'player_damage', 'healing_done'])
+   ```
+
+5. **Performance Heatmaps**: Heatmaps showing metric comparisons across players
+   ```python
+   heatmap = visualizer.create_performance_heatmap()
+   ```
+
+#### Visualization Customization
+
+Charts can be customized with various options:
+
+```python
+# Customize KDA chart
+kda_chart = visualizer.create_kda_chart(
+    title="Team KDA Comparison",
+    sort_by='kills',  # Sort by kills instead of default KDA ratio
+    team_colors=True  # Use team colors to differentiate players
+)
+
+# Apply custom theme
+from src.visualization.base import ThemeManager
+ThemeManager.apply_theme('dark')  # Apply dark theme
+# Other themes: 'default', 'minimal'
+```
+
 ## Example Scripts
 
 The SDK includes several example scripts demonstrating its functionality:
 
-1. **Basic Performance Analysis**: `examples/performance_analysis.py`
-   - Demonstrates basic player performance analysis and visualization
+### Basic Performance Analysis
 
-2. **Enhanced Visualizations**: `examples/enhanced_performance_visualization.py`
-   - Shows advanced visualization capabilities with customization
-
-3. **DataFrame Generation**: `examples/generate_dataframes.py`
-   - Illustrates how to generate and work with various dataframes
-
-To run an example:
+Located at `examples/performance_analysis.py`, this script demonstrates basic player performance analysis:
 
 ```bash
-python3 examples/performance_analysis.py path/to/CombatLogExample.log
+# Run with default example log
+python examples/performance_analysis.py
+
+# Or with a specific log file
+python examples/performance_analysis.py path/to/your/combatlog.log
 ```
+
+This example:
+- Parses a SMITE 2 CombatLog file
+- Calculates player performance metrics (KDA, damage, healing)
+- Displays summary tables of player performance
+- Shows top performers in different categories
+- Generates basic visualizations saved to `examples/output/`
+
+### Enhanced Visualization
+
+Located at `examples/enhanced_performance_visualization.py`, this script showcases advanced visualization capabilities:
+
+```bash
+# Run with default example log
+python examples/enhanced_performance_visualization.py
+
+# Or with a specific log file
+python examples/enhanced_performance_visualization.py path/to/your/combatlog.log
+```
+
+This example demonstrates:
+- Creating various chart types (KDA, damage distribution, radar charts)
+- Applying custom themes to visualizations
+- Customizing chart properties (colors, sorting, metrics)
+- Exporting visualizations in multiple formats (PNG, SVG)
+- Creating specialized views like performance heatmaps
+
+All visualizations are saved to `examples/output/` directory.
+
+### DataFrame Generation
+
+Located at `examples/generate_dataframes.py`, this script shows how to access and manipulate the raw DataFrames:
+
+```bash
+python examples/generate_dataframes.py
+```
+
+This example demonstrates:
+- Extracting different DataFrame types from the parser
+- Saving DataFrames to CSV files for external analysis
+- Accessing various data views (combat, economy, items)
 
 ## DataFrame Schemas
 
@@ -272,4 +357,4 @@ Contributions to improve the SDK are welcome! Here are some ways to contribute:
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the LICENSE file for details. 
